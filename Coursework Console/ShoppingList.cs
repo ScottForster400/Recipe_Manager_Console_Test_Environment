@@ -3,26 +3,24 @@
     private List<Item> listOfItems;
 
     string path = "ShoppingList.txt";
-    public void AddShopping(string item, int amount)
+    public void AddShopping(string item, string amount,string measurement)
     {
 
         foreach (Item listedItem in listOfItems)
         {
             if (listedItem.GetName() == item)
             {
-                listedItem.IncreaseAmount(1);
+                listedItem.IncreaseAmount(Convert.ToInt32(amount));
                 return;
             }
             else
             {
-                Item item1 = new Item();
-                item1.SetItemData(item, amount);
+                Item item1 = new Item(item,amount,measurement);
                 listOfItems.Add(item1);
                 return;
             }
         }
-        Item item2 = new Item();
-        item2.SetItemData(item, amount);
+        Item item2 = new Item(item,amount,measurement);
         listOfItems.Add(item2);
     }
     public void RemoveShopping(string item)
@@ -55,11 +53,11 @@
         {
             if (listedItem.IsGot() == true)
             {
-                formattedItems.Add($"[X] {listedItem.GetName()}");
+                formattedItems.Add($"[X] {listedItem.GetName()} {listedItem.GetMeasurement()} {listedItem.GetAmount()}");
             }
             else
             {
-                formattedItems.Add($"[ ] {listedItem.GetName()}");
+                formattedItems.Add($"[ ] {listedItem.GetName()} {listedItem.GetMeasurement()} {listedItem.GetAmount()}");
             }
         }
         return formattedItems;
@@ -82,13 +80,11 @@
         itemDetails.RemoveAt(itemDetails.Count - 1);//needed as the formatting adds an empty index at last index
         for(int i = 0;i < itemDetails.Count; i= i+ 4)
         {
-            Item itemTemp = new Item();
-            itemTemp.SetItemData(itemDetails[i], Convert.ToInt32(itemDetails[i+1]));
+            Item itemTemp = new Item(itemDetails[i], itemDetails[i + 1], itemDetails[i+3]);
             if (itemDetails[i + 2].ToLower() == "true")
             {
                 itemTemp.ItemGot();
             }
-            itemTemp.SetMeasurement(itemDetails[i + 3]);
             listOfItems.Add(itemTemp);
         }
     }
@@ -106,5 +102,8 @@
         }
         return CopyOfList;
     }
-
+    public  void AddRecipeIngriedients(Item ingriedient)
+    {
+        listOfItems.Add(ingriedient);
+    }
 }

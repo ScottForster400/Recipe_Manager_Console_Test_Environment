@@ -5,19 +5,15 @@
     private bool itemBeenGot = false;
     private string measurement = "NULL";
 
-    public Item()//Add constructor class
+    public Item(string selectedName, string selectedAmount,string selectedMeasurement)  
     {
-            
-    }
-
-    public void SetMeasurement(string selectedMeasurement)
-    {
+        name = selectedName;
+        bool isInt = Int32.TryParse(selectedAmount, out amount);
+        if (isInt == true)
+        {
+            amount = Convert.ToInt32(selectedAmount);
+        }
         measurement = selectedMeasurement;
-    }
-    public void SetItemData(string selectedName, int  selectedAmount) //gnjdfgjkdflgjldf
-    {
-        name = selectedName.ToLower();
-        amount = selectedAmount;
     }
     public string GetName()
     {
@@ -26,6 +22,10 @@
     public int GetAmount() 
     { 
         return amount; 
+    }
+    public string GetMeasurement()
+    {
+        return measurement;
     }
     public void ItemGot()
     {

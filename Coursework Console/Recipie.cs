@@ -44,4 +44,11 @@ class Recipe
         formatedString= formatedString + $"{servingSize},;";
         return formatedString;
     }
+    public void AddToShoppingList(ShoppingList shoppingList)
+    {
+        foreach (Item item in ingriedients)
+        {
+            shoppingList.AddShopping(item.GetName(),Convert.ToString(item.GetAmount()),item.GetMeasurement());
+        }
+    }
 }

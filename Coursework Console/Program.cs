@@ -1,11 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 ShoppingList userList = new ShoppingList();
 userList.initialiseList();
-userList.AddShopping("eggs", 2);
-userList.AddShopping("bread", 1);
-userList.AddShopping("milk", 4);
-userList.AddShopping("eggs", 2);
-userList.AddShopping("lemons", 10);
+userList.AddShopping("eggs", "2","NULL");
+userList.AddShopping("bread", "1","NULL");
+userList.AddShopping("milk", "4","pints");
+userList.AddShopping("eggs", "2","cartons");
+userList.AddShopping("lemons", "10","NULL");
 userList.CheckOff("lemons");
 List<string> formattedList = userList.GetFormattedList();
 foreach(string item in formattedList)
@@ -19,11 +19,11 @@ foreach (string item in formattedList)
 {
     Console.WriteLine(item);
 }
+Console.WriteLine("Save and open test");
 userList.SaveList();
 userList.ClearList();
 userList.OpenList();
 formattedList.Clear();
-Console.WriteLine("Save and open test");
 formattedList = userList.GetFormattedList();
 foreach (string item in formattedList)
 {
@@ -50,4 +50,14 @@ Console.WriteLine(testOpen[0].GetSteps()[1]);
 Console.WriteLine(testOpen[0].GetServingSize());
 testOpen[0].GetFormatedForFile();
 
+
+Console.WriteLine("recipe ingriedients to shopping list");
+ShoppingList testList = new ShoppingList();
+testList.initialiseList();
+testOpen[0].AddToShoppingList(testList);
+List<string> uh = testList.GetFormattedList();
+foreach (string item in uh)
+{
+    Console.WriteLine(item);
+}
 

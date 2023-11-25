@@ -83,13 +83,11 @@ class Recipies
         List<Item> createdIngrdients = new List<Item>();
         for (int i = 0; i < itemDetails.Count; i = i + 4)
         {
-            Item itemTemp = new Item();
-            itemTemp.SetItemData(itemDetails[i], Convert.ToInt32(itemDetails[i + 1]));
+            Item itemTemp = new Item(itemDetails[i], itemDetails[i + 1], itemDetails[i+3]);
             if (itemDetails[i + 2].ToLower() == "true")
             {
                 itemTemp.ItemGot();
             }
-            itemTemp.SetMeasurement(itemDetails[i + 3]);
             createdIngrdients.Add(itemTemp);
         }
         return createdIngrdients;
@@ -103,4 +101,5 @@ class Recipies
         }
         return formattedRecipies;
     }
+   
 }
