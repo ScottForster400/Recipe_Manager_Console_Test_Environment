@@ -41,6 +41,8 @@
 //testRecipies.InitialiseRecipies();
 //testRecipies.addRecipe(testItems, testSteps, "4");
 //testRecipies.SaveList();
+using System.ComponentModel;
+
 Console.WriteLine("openTEst");
 Recipies testRecipies = new Recipies();
 testRecipies.InitialiseRecipies();
@@ -60,4 +62,27 @@ foreach(Recipe recipe in testRecipie)
 //{
 //    Console.WriteLine(item);
 //}
-
+Console.WriteLine("\ningriedient enter test");
+List<string> testIngriedients = new List<string>
+{
+    "olive oil",
+    "chopped tomatoes",
+    "garlic",
+    "oregano",
+    "basil",
+    "red pepper flakes",
+    "salt",
+    "black pepper",
+    "onion",
+    "cumin",
+    "coconut milk",
+    "vegetable broth",
+    "potatoes",
+    "leeks",
+    "sugar",
+};
+List<Recipe> foundRecipies = testRecipies.FindRecipiesFromIngriedients(testIngriedients);
+foreach(Recipe recipe in foundRecipies)
+{
+    Console.WriteLine(recipe.GetRecipieName().Trim());
+}

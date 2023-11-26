@@ -104,4 +104,54 @@ class Recipies
     {
         return listOfRecipies;
     }
+    public List<Recipe> FindRecipiesFromIngriedients(List<string> enteredIngriedients)
+    {
+        List<Recipe> matchingRecipies = new List<Recipe>(); 
+        int numberOfMatchingIngriedients =0;
+        int freeSpacePointer = 0;//need this to know where the next free space in array is
+        int[,] matchingIngriedientsRecipieStore = new int[listOfRecipies.Count, 2]; //Learned how to make and manipulate 2d arrays from https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/arrays
+        for (int i = 0; i < listOfRecipies.Count; i++)
+        {
+            List<Item> recipieIngriedients = listOfRecipies[i].GetIngridients();
+            foreach (Item ingriedient in recipieIngriedients)
+            {
+                if (enteredIngriedients.Contains(ingriedient.GetName()) == true)
+                {
+                    numberOfMatchingIngriedients = numberOfMatchingIngriedients + 1;
+                }
+            }
+            if (numberOfMatchingIngriedients >= 3)
+            {
+                matchingIngriedientsRecipieStore[freeSpacePointer, 0] = i;
+                matchingIngriedientsRecipieStore[freeSpacePointer, 1] = numberOfMatchingIngriedients;
+                freeSpacePointer=freeSpacePointer+1;
+            }
+            numberOfMatchingIngriedients = 0;
+        }
+        bool swapMade=true;
+        while (swapMade == true)//This allows loop to be broken if no swaps made saving time and processing as bubble soot would continue until every value checked
+        {
+            for (int i = 0;i<freeSpacePointer-1;i++)//Used bubble sort algorithm to sort the array into decending order of matching ingriedients
+            {
+                swapMade = false;
+
+                if (matchingIngriedientsRecipieStore[i, 1] < matchingIngriedientsRecipieStore[i+1,1])
+                {
+                    int tempRecipieIndex = matchingIngriedientsRecipieStore[i+1, 0];
+                    int tempMatchingIngriedients = matchingIngriedientsRecipieStore[i+1,1];
+                    matchingIngriedientsRecipieStore[i + 1, 0] = matchingIngriedientsRecipieStore[i, 0];
+                    matchingIngriedientsRecipieStore[i + 1, 1]= matchingIngriedientsRecipieStore[i,1];
+                    matchingIngriedientsRecipieStore[i, 0] = tempRecipieIndex;
+                    matchingIngriedientsRecipieStore[i,1] = tempMatchingIngriedients;
+                    swapMade = true;
+                }
+            }
+        }
+        for(int i = 0; i<freeSpacePointer; i++)
+        {
+            matchingRecipies.Add(listOfRecipies[matchingIngriedientsRecipieStore[i,0]]);
+        }
+        return matchingRecipies;
+    }
+
 }
