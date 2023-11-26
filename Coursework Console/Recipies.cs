@@ -41,37 +41,36 @@ class Recipies
         string allRecipiesFormatted = FormatAllRecipies();
         File.AppendAllText(path, allRecipiesFormatted);
     }
-    public void addRecipe(List<Item> selectedItems, List<string>selecetdSteps,string selecetdServingSize)
+    public void addRecipe(string selectedName,List<Item> selectedItems, List<string>selecetdSteps,string selecetdServingSize)
     {
-        Recipe tempRecipie = new Recipe(selectedItems, selecetdSteps, selecetdServingSize);
+        Recipe tempRecipie = new Recipe(selectedName,selectedItems, selecetdSteps, selecetdServingSize);
         listOfRecipies.Add(tempRecipie);
 
     }
-    public List<Recipe> OpenList()
+    public void OpenList()
     {
+        string recipieName;
         List<string> ingriedientsString;
         List<string> stepsList;
-        List<string> servingSize;
+        string servingSize;
         string unsortedRecipiesString = File.ReadAllText(path).Trim();
         List<string> unsortedRecipiesList = unsortedRecipiesString.Split(";").ToList();
         unsortedRecipiesList.RemoveAt(unsortedRecipiesList.Count-1);
         
-        for (int i = 0; i < unsortedRecipiesList.Count; i=i+3)
+        for (int i = 0; i < unsortedRecipiesList.Count; i=i+4)
         {
-            ingriedientsString = unsortedRecipiesList[i].Split(",").ToList();
-            stepsList = unsortedRecipiesList[i+1].Split(",").ToList();
-            servingSize = unsortedRecipiesList[i+2].Split(",").ToList();
+            recipieName = unsortedRecipiesList[i];
+            ingriedientsString = unsortedRecipiesList[i+1].Split(",").ToList();
+            stepsList = unsortedRecipiesList[i+2].Split(",").ToList();
+            servingSize = unsortedRecipiesList[i+3];
             ingriedientsString.RemoveAt(ingriedientsString.Count - 1);
             stepsList.RemoveAt(stepsList.Count - 1);
             //servingSize.RemoveAt(servingSize.Count - 1);
             List<Item> ingriedientsObj = CreateIngriedientsObjList(ingriedientsString);
-            Recipe recipie1 = new Recipe(ingriedientsObj, stepsList, servingSize[0]);
+            Recipe recipie1 = new Recipe(recipieName,ingriedientsObj, stepsList, servingSize);
             listOfRecipies.Add(recipie1);
         }
-        return listOfRecipies;
  
-        int stop = 333;
-
     }
     public void ClearList()
     {
@@ -101,5 +100,8 @@ class Recipies
         }
         return formattedRecipies;
     }
-   
+   public List<Recipe> GetAllRecipies()
+    {
+        return listOfRecipies;
+    }
 }
